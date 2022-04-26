@@ -1,24 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Signup from './components/Signup';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import {useState,useEffect} from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 function App() {
+  let [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(()=>{
+    if(localStorage.getItem("Authorization")!==null){
+      setIsLoggedIn(true);
+    }
+  },[])
   return (
+    <Router>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        <Route path="/signup" exact>
+          <Signup />
+        </Route>
+        <Route path="/login" exact>
+          <Login />
+        </Route>
+        <Route path="/" exact>
+          <Dashboard />
+        </Route>
+        {/* <Route path="/" exact>  
+          <Question />
+        </Route> */}
+      </Switch>
     </div>
+    </Router>
   );
 }
 
